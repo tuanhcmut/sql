@@ -134,7 +134,7 @@ WHERE DOANHSO IN (
 
 ### 32. Tính tổng số sản phẩm do “Trung Quoc” sản xuất:
 ```sql
--- 32. Tính tổng số sản phẩm do “Trung Quoc” sản xuất
+-- 32 [OK]. Tính tổng số sản phẩm do “Trung Quoc” sản xuất
 SELECT SUM(SL) AS ketqua
 FROM CTHD
 WHERE MASP IN (
@@ -146,6 +146,13 @@ WHERE MASP IN (
 -- 32 [CÁCH KHÁC]. Tính tổng số sản phẩm do “Trung Quoc” sản xuất
 SELECT SUM(SL) AS ketqua
 FROM CTHD, SANPHAM WHERE CTHD.MASP = SANPHAM.MASP AND nuocsx = 'Trung Quoc'
+
+-- 32 [CÁCH TỐT NHẤT]. Tính tổng số sản phẩm do “Trung Quốc” sản xuất
+SELECT SUM(CTHD.SL) AS ketqua
+FROM CTHD
+JOIN SANPHAM ON CTHD.MASP = SANPHAM.MASP
+WHERE SANPHAM.NUOCSX = 'Trung Quoc';
+
 ```
 
 ### 33. Tính tổng số sản phẩm của từng nước sản xuất:
