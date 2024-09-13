@@ -278,6 +278,14 @@ HAVING SUM(TRIGIA) = (
     ) AS MonthlySales
 );
 
+-- 41 [NHANH]. Tháng nào trong năm 2006 có doanh số bán hàng cao nhất? (Bao gồm các tháng có cùng doanh số cao nhất)
+SELECT TOP 1 WITH TIES
+    MONTH(NGHD) AS Thang,
+    SUM(TRIGIA) AS TongDoanhSo
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+GROUP BY MONTH(NGHD)
+ORDER BY SUM(TRIGIA) DESC;
 ```
 
 ### 42. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006:
