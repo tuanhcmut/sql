@@ -116,10 +116,20 @@ WHERE NUOCSX = 'Trung Quoc' AND GIA IN (
 
 ### 31. Tìm khách hàng nằm trong 3 hạng cao nhất (xếp hạng theo doanh số):
 ```sql
--- 31. Tìm khách hàng nằm trong 3 hạng cao nhất (xếp hạng theo doanh số)
+-- 31. [SAI] Tìm khách hàng nằm trong 3 hạng cao nhất (xếp hạng theo doanh số)
 SELECT TOP 3 MAKH, HOTEN
 FROM KHACHHANG
 ORDER BY DOANHSO DESC;
+
+-- 31. Tìm khách hàng nằm trong 3 hạng cao nhất (xếp hạng theo doanh số)
+SELECT MAKH, HOTEN
+FROM KHACHHANG
+WHERE DOANHSO IN (
+    SELECT DISTINCT TOP 3 DOANHSO
+    FROM KHACHHANG
+    ORDER BY DOANHSO DESC
+);
+
 ```
 
 ### 32. Tính tổng số sản phẩm do “Trung Quoc” sản xuất:
