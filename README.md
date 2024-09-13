@@ -237,11 +237,10 @@ WHERE MAKH IN (
     ORDER BY COUNT(SOHD) DESC
 );
 
--- 40. Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất
 SELECT K.MAKH, K.HOTEN
 FROM KHACHHANG K
-JOIN (
-    SELECT MAKH, COUNT(SOHD) AS PurchaseCount
+WHERE K.MAKH IN (
+    SELECT MAKH
     FROM HOADON
     GROUP BY MAKH
     HAVING COUNT(SOHD) = (
@@ -252,8 +251,7 @@ JOIN (
             GROUP BY MAKH
         ) AS SubQuery
     )
-) AS PC ON K.MAKH = PC.MAKH;
-
+) 
 ```
 
 ### 41. Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?
