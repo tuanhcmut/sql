@@ -227,7 +227,7 @@ HAVING COUNT(DISTINCT CTHD.MASP) = 3;
 
 ### 40. Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất:
 ```sql
--- 40. [SAI] Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất
+-- 40. [ĐÚNG NHƯNG CHƯA ĐỦ] Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất
 SELECT MAKH, HOTEN
 FROM KHACHHANG
 WHERE MAKH IN (
