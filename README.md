@@ -23,7 +23,7 @@ WHERE YEAR(NGHD) = 2006
 
 ### 26. Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006:
 ```sql
--- 26. Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006
+-- 26. [SAI] Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006
 SELECT HOTEN
 FROM KHACHHANG
 WHERE MAKH = (
@@ -32,6 +32,21 @@ WHERE MAKH = (
     WHERE YEAR(NGHD) = 2006
     ORDER BY TRIGIA DESC
 );
+
+-- 26. Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006
+SELECT HOTEN
+FROM KHACHHANG
+WHERE MAKH = (
+    SELECT MAKH
+    FROM HOADON
+    WHERE YEAR(NGHD) = 2006
+      AND TRIGIA = (
+          SELECT MAX(TRIGIA)
+          FROM HOADON
+          WHERE YEAR(NGHD) = 2006
+      )
+);
+
 ```
 
 ### 27. In ra danh sách 3 khách hàng đầu tiên (MAKH, HOTEN) sắp xếp theo doanh số giảm dần:
