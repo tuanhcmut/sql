@@ -47,6 +47,12 @@ WHERE MAKH = (
       )
 );
 
+Cách nhanh nhất
+         SELECT TOP 1 WITH TIES *
+          FROM HOADON JOIN KHACHHANG On HOADON.MAKH = KHACHHANG.MAKH
+          WHERE YEAR(NGHD) = 2006 
+          ORDER BY TRIGIA DESC
+
 ```
 
 ### 27. In ra danh sách 3 khách hàng đầu tiên (MAKH, HOTEN) sắp xếp theo doanh số giảm dần:
