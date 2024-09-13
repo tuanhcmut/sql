@@ -2,11 +2,23 @@ Dưới đây là các câu lệnh SQL cho từng yêu cầu của bạn, bao g�
 
 ### 25. Tìm số hóa đơn có trị giá cao nhất trong năm 2006:
 ```sql
--- 25. Tìm số hóa đơn có trị giá cao nhất trong năm 2006
+-- 25. [SAI] Tìm số hóa đơn có trị giá cao nhất trong năm 2006
 SELECT TOP 1 SOHD, TRIGIA
 FROM HOADON
 WHERE YEAR(NGHD) = 2006
 ORDER BY TRIGIA DESC;
+
+-- 25. Tìm số hóa đơn có trị giá cao nhất trong năm 2006
+SELECT SOHD, TRIGIA
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+  AND TRIGIA = (
+      SELECT MAX(TRIGIA)
+      FROM HOADON
+      WHERE YEAR(NGHD) = 2006
+  );
+
+
 ```
 
 ### 26. Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006:
