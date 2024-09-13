@@ -227,7 +227,7 @@ HAVING COUNT(DISTINCT CTHD.MASP) = 3;
 
 ### 40. Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất:
 ```sql
--- 40. Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất
+-- 40. [SAI] Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất
 SELECT MAKH, HOTEN
 FROM KHACHHANG
 WHERE MAKH IN (
@@ -236,6 +236,24 @@ WHERE MAKH IN (
     GROUP BY MAKH
     ORDER BY COUNT(SOHD) DESC
 );
+
+-- 40. Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất
+SELECT K.MAKH, K.HOTEN
+FROM KHACHHANG K
+JOIN (
+    SELECT MAKH, COUNT(SOHD) AS PurchaseCount
+    FROM HOADON
+    GROUP BY MAKH
+    HAVING COUNT(SOHD) = (
+        SELECT MAX(PurchaseCount)
+        FROM (
+            SELECT COUNT(SOHD) AS PurchaseCount
+            FROM HOADON
+            GROUP BY MAKH
+        ) AS SubQuery
+    )
+) AS PC ON K.MAKH = PC.MAKH;
+
 ```
 
 ### 41. Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?
