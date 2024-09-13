@@ -36,14 +36,15 @@ WHERE MAKH = (
 -- 26. Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006
 SELECT HOTEN
 FROM KHACHHANG
-WHERE MAKH = (
+WHERE MAKH IN (
     SELECT MAKH
     FROM HOADON
     WHERE YEAR(NGHD) = 2006
-      AND TRIGIA = (
-          SELECT MAX(TRIGIA)
+      AND TRIGIA IN (
+          SELECT TOP 1 TRIGIA
           FROM HOADON
           WHERE YEAR(NGHD) = 2006
+          ORDER BY TRIGIA DESC
       )
 );
 
