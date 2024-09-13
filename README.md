@@ -258,13 +258,29 @@ JOIN (
 
 ### 41. Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?
 ```sql
--- 41. Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?
-SELECT MONTH(NGHD) AS Month, SUM(TRIGIA) AS TotalRevenue
+-- 41 [ĐÚNG NHƯNG CHƯA ĐỦ]. Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?
+SELECT TOP 1 MONTH(NGHD) AS Month, SUM(TRIGIA) AS TotalRevenue
 FROM HOADON
 WHERE YEAR(NGHD) = 2006
 GROUP BY MONTH(NGHD)
 ORDER BY TotalRevenue DESC
-LIMIT 1;
+
+-- 41. Tháng nào trong năm 2006 có doanh số bán hàng cao nhất? (Bao gồm các tháng có cùng doanh số cao nhất)
+SELECT MONTH(NGHD) AS Month, 
+       SUM(TRIGIA) AS TotalRevenue
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+GROUP BY MONTH(NGHD)
+HAVING SUM(TRIGIA) = (
+    SELECT MAX(MonthlyTotal)
+    FROM (
+        SELECT SUM(TRIGIA) AS MonthlyTotal
+        FROM HOADON
+        WHERE YEAR(NGHD) = 2006
+        GROUP BY MONTH(NGHD)
+    ) AS MonthlySales
+);
+
 ```
 
 ### 42. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006:
