@@ -285,15 +285,36 @@ HAVING SUM(TRIGIA) = (
 
 ### 42. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006:
 ```sql
--- 42. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006
-SELECT MASP, TENSP
+-- 42 [ĐÚNG NHƯNG CHƯA ĐỦ]. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006
+SELECT TOP 1 SANPHAM.MASP, TENSP
 FROM SANPHAM
 JOIN CTHD ON SANPHAM.MASP = CTHD.MASP
 JOIN HOADON ON CTHD.SOHD = HOADON.SOHD
 WHERE YEAR(NGHD) = 2006
-GROUP BY MASP, TENSP
-ORDER BY SUM(SL) ASC
-LIMIT 1;
+GROUP BY SANPHAM.MASP, TENSP
+ORDER BY SUM(SL) ASC;
+
+-- 42. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006
+SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP IN (
+    SELECT MASP
+    FROM CTHD
+    JOIN HOADON ON CTHD.SOHD = HOADON.SOHD
+    WHERE YEAR(NGHD) = 2006
+    GROUP BY MASP
+    HAVING SUM(SL) = (
+        SELECT MIN(TongSL)
+        FROM (
+            SELECT MASP, SUM(SL) AS TongSL
+            FROM CTHD
+            JOIN HOADON ON CTHD.SOHD = HOADON.SOHD
+            WHERE YEAR(NGHD) = 2006
+            GROUP BY MASP
+        ) AS ProductSales
+    )
+);
+
 ```
 
 ### 43. Mỗi nước sản xuất, tìm sản phẩm (MASP, TENSP) có giá bán cao nhất:
