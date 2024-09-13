@@ -320,14 +320,14 @@ WHERE MASP IN (
 ### 43. Mỗi nước sản xuất, tìm sản phẩm (MASP, TENSP) có giá bán cao nhất:
 ```sql
 -- 43. Mỗi nước sản xuất, tìm sản phẩm (MASP, TENSP) có giá bán cao nhất
-WITH MaxPrices AS (
-    SELECT NUOCSX, MAX(GIA) AS MaxPrice
+SELECT MASP, TENSP, NUOCSX, GIA
+FROM SANPHAM AS sp
+WHERE GIA = (
+    SELECT MAX(GIA)
     FROM SANPHAM
-    GROUP BY NUOCSX
-)
-SELECT SANPHAM.MASP, SANPHAM.TENSP
-FROM SANPHAM
-JOIN MaxPrices ON SANPHAM.NUOCSX = MaxPrices.NUOCSX AND SANPHAM.GIA = MaxPrices.MaxPrice;
+    WHERE NUOCSX = sp.NUOCSX
+);
+
 ```
 
 ### 44. Tìm nước sản xuất sản xuất ít nhất 3 sản phẩm có giá bán khác nhau:
