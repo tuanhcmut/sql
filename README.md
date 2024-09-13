@@ -59,7 +59,7 @@ ORDER BY DOANHSO DESC;
 
 ### 28. In ra danh sách các sản phẩm (MASP, TENSP) có giá bán bằng 1 trong 3 mức giá cao nhất:
 ```sql
--- 28. In ra danh sách các sản phẩm (MASP, TENSP) có giá bán bằng 1 trong 3 mức giá cao nhất
+-- 28 [SAI]. In ra danh sách các sản phẩm (MASP, TENSP) có giá bán bằng 1 trong 3 mức giá cao nhất
 SELECT MASP, TENSP
 FROM SANPHAM
 WHERE GIA IN (
@@ -67,6 +67,16 @@ WHERE GIA IN (
     FROM SANPHAM
     ORDER BY GIA DESC
 );
+
+-- 28. In ra danh sách các sản phẩm (MASP, TENSP) có giá bán bằng 1 trong 3 mức giá cao nhất (khác nhau)
+SELECT MASP, TENSP
+FROM SANPHAM
+WHERE GIA IN (
+    SELECT DISTINCT TOP 3 GIA
+    FROM SANPHAM
+    ORDER BY GIA DESC
+);
+
 ```
 
 ### 29. In ra danh sách các sản phẩm (MASP, TENSP) do “Thai Lan” sản xuất có giá bằng 1 trong 3 mức giá cao nhất:
