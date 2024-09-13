@@ -320,6 +320,19 @@ WHERE MASP IN (
     )
 );
 
+-- 42 [CÁCH KHÁC]. Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006
+SELECT TOP 1 WITH TIES
+    SANPHAM.MASP,
+    SANPHAM.TENSP,
+    SUM(CTHD.SL) AS TongSoLuong
+FROM CTHD
+JOIN HOADON ON CTHD.SOHD = HOADON.SOHD
+JOIN SANPHAM ON CTHD.MASP = SANPHAM.MASP
+WHERE YEAR(HOADON.NGHD) = 2006
+GROUP BY SANPHAM.MASP, SANPHAM.TENSP
+ORDER BY TongSoLuong;
+
+
 ```
 
 ### 43. Mỗi nước sản xuất, tìm sản phẩm (MASP, TENSP) có giá bán cao nhất:
