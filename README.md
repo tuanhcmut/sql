@@ -206,6 +206,12 @@ SELECT SOHD
 FROM CTHD
 GROUP BY SOHD
 HAVING COUNT(DISTINCT MASP) >= 4;
+
+-- 38[CÁCH NÊN LÀM]. Tìm hóa đơn có mua ít nhất 4 sản phẩm khác nhau
+SELECT SOHD, COUNT(*) AS SOSP
+FROM CTHD
+GROUP BY SOHD
+HAVING COUNT(DISTINCT MASP) >= 4;
 ```
 
 ### 39. Tìm hóa đơn có mua 3 sản phẩm do “Việt Nam” sản xuất (3 sản phẩm khác nhau):
