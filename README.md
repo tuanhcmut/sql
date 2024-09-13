@@ -237,21 +237,13 @@ WHERE MAKH IN (
     ORDER BY COUNT(SOHD) DESC
 );
 
-SELECT K.MAKH, K.HOTEN
-FROM KHACHHANG K
-WHERE K.MAKH IN (
-    SELECT MAKH
-    FROM HOADON
-    GROUP BY MAKH
-    HAVING COUNT(SOHD) = (
-        SELECT MAX(PurchaseCount)
-        FROM (
-            SELECT COUNT(SOHD) AS PurchaseCount
-            FROM HOADON
-            GROUP BY MAKH
-        ) AS SubQuery
-    )
-) 
+SELECT MAKH, HOTEN FROM KHACHHANG 
+WHERE MAKH IN 
+(
+   SELECT TOP 1 with ties MAKH  
+   FROM HOADON
+   GROUP BY MAKH order by COUNT(SOHD) DESC 
+)
 ```
 
 ### 41. Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?
