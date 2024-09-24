@@ -1,10 +1,27 @@
+### 2a
+```sql
+-- Doanh số từng sản phẩm
+-- Cách 1: dùng 1 bảng duy nhất, nhóm dựa trên BevId do đề không yêu cầu xuất ra tên sp mà chỉ cần theo sp là đc
+SELECT BevID, SUM(quantity*price) AS DOANHSO
+FROM InvoiceDetail
+GROUP BY BevId
+
+-- Cách 2: dùng bảng Beverage làm bảng chính để LEFT join với InvoiceDetail, cái này sẽ đầy đủ sp (trong trường hợp sp nào k bán được thì doanhso = null)
+SELECT B.BevId, SUM(ID.Quantity * ID.Price) AS DOANHSO
+FROM Beverage AS B
+LEFT JOIN InvoiceDetail AS ID ON B.BevID = ID.BevID
+GROUP BY B.BevID;
+
+```
+ 
+
 ### 2b
 ```sql
 -- Mã hóa đơn mua tất cả sản phẩm thuộc loại nước khoáng/nước suối
 -- B1: Xác định hai bảng cần xét (R và S), nó phải có chung cột nào đó (vd : BevID)
 -- B2: Xác định cột cần xuất/select (A), cột chung giữa hai bảng là gì (B)
 -- B3: Xem có điều kiện gì nữa không, nếu có thì dùng where trong công thức (điều kiện thường cũng đơn giản)
--- B4: áp dụng công thức trong file (thế R, S , A, B, điều kiện where nếu có)
+-- B4: áp dụng công thức nhữ đã hướng dẫn (thế R, S , A, B, điều kiện where nếu có)
 
 SELECT InvoiceDetail.InvCode
 FROM InvoiceDetail
