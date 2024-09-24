@@ -131,3 +131,24 @@ GROUP BY BT.TypeName
 ORDER BY SUM(A.quantity) DESC
 
 ```
+### 3
+```sql
+ 
+CREATE TRIGGER trg_UpdateInvoiceAndBeverage
+ON InvoiceDetail
+AFTER INSERT
+AS
+BEGIN
+    -- Cập nhật TotalAmount trong bảng Invoices
+    UPDATE I
+    SET TotalAmount = TotalAmount + (ID.Quantity * ID.Price)
+    FROM Invoices I
+    JOIN inserted ID ON I.InvCode = ID.InvCode;
+
+    -- Cập nhật Quantity trong bảng Beverage
+    UPDATE B
+    SET Quantity = Quantity - ID.Quantity
+    FROM Beverage B
+    JOIN inserted ID ON B.BevID = ID.BevID;
+END;
+```
