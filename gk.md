@@ -110,7 +110,7 @@ JOIN BeverageType ÁS BT ON B.TypeID = BT.TypeID
 ORDER BY A.quantity DESC
 -- Bước 2: Lúc này thu được hai cột (Typename và Quantity). Giờ nhóm lại (group by) theo TypeName.
 -- Cột Typename được phép select, còn Quantity do không group by nên chỉ được dùng SUM/MIN/MAX/COUNT mà thôi
--- Ta dùng SUM(QUANTITY) để xuất ra Tổng số sp bán ra theo từng loại sp. ORDER BY cũng theo 
+-- Ta dùng SUM(QUANTITY) để xuất ra Tổng số sp bán ra theo từng loại sp. ORDER BY mà giữ nguyên như vậy là sai
 SELECT SUM(A.quantity), BT.typename FROM InvoiceDetail AS A 
 JOIN Beverage AS B ON B.BevID = A.BevID
 JOIN BeverageType AS BT ON B.TypeID = BT.TypeID
