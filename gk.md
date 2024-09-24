@@ -1,3 +1,60 @@
+### 1a
+```sql
+-- Xóa sp không bán được , đọc file topic 6 , phần Phép trừ vd2, sử dụng NOT IN (không cần đọc mấy cái khác)
+-- Nhận xét: SP không bán được  = tất cả SP (có trong bảng Beverage) - SP bán được (có trong bảng InvoiceDetail). Cột chung
+-- Áp công thức sau: với A là bảng chứa tất cả các sp, còn B là bảng chứa các SP bán được, C là cột chung giữa hai bảng này
+
+SELECT * FROM A
+WHERE C NOT IN (
+    SELECT C
+    FROM B
+);
+
+--- B1. Select trước để thử xem:
+
+SELECT * FROM Beverage
+WHERE BevID NOT IN (
+    SELECT BevID
+    FROM InvoiceDetail
+);
+
+--- B2. Thấy đúng rồi thì chuyển hóa SELECT *  thành DELETE
+
+DELETE FROM Beverage
+WHERE BevID NOT IN (
+    SELECT DISTINCT BevID
+    FROM InvoiceDetail
+);
+
+```
+
+
+### 1b
+```sql
+--Giảm giá 2000 nếu giá sau giảm không thấp hơn 6000, ngược lại giá mới là 6000
+-- suy ra 2 trường hợp: nếu price - 2000 < 6000 thì price = 6000 ngược lại price = price - 2000
+-- Hoặc suy như vậy: nếu price - 2000 >= 6000 thì price = price - 6000 ngược lại price = 6000
+-- b1: select trước để xem câu lệnh (case ... end) có đúng không, nhớ điều kiện where là nước có ga
+
+SELECT *, CASE
+ WHEN PRICE - 2000 >= 6000 THEN PRICE - 2000
+ ELSE 6000
+END  
+FROM Beverage
+WHERE typeid=0001
+
+-- b2: Sau khi chạy xong, thấy giá mới đều từ 6000 trở lên rồi mới chuyển hóa sang lệnh UPDATE [tên bảng] SET PRICE = ...
+
+UPDATE Beverage
+SET Beverage.PRICE = CASE
+	WHEN PRICE - 2000 < 6000 THEN 6000
+    ELSE PRICE - 2000
+END 
+WHERE typeid=0001
+
+```
+
+
 ### 2a
 ```sql
 -- Doanh số từng sản phẩm
