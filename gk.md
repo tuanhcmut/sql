@@ -1,8 +1,9 @@
 ### 1a
 ```sql
 -- Xóa sp không bán được , đọc file topic 6 , phần Phép trừ vd2, sử dụng NOT IN (không cần đọc mấy cái khác)
--- Nhận xét: SP không bán được  = tất cả SP (có trong bảng Beverage) - SP bán được (có trong bảng InvoiceDetail). Cột chung
--- Áp công thức sau: với A là bảng chứa tất cả các sp, còn B là bảng chứa các SP bán được, C là cột chung giữa hai bảng này
+-- Nhận xét: SP không bán được  = tất cả SP (có trong bảng Beverage) - SP bán được (có trong bảng InvoiceDetail)
+-- với A là bảng chứa tất cả các sp, còn B là bảng chứa các SP bán được, C là cột chung giữa hai bảng này
+-- Suy ra A là bảng Beverage, B là bảng InvoiceDetail, C là cột BevId
 
 SELECT * FROM A
 WHERE C NOT IN (
