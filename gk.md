@@ -1,6 +1,9 @@
 ### 2c
 ```sql
---- Bước 1: Bảng chính là InvoiceDetail AS A, đem join với Beverage AS B để lấy TypeId, đem join với BeverageDetail AS BT để lấy TypeName dựa trên TypeId, sắp xếp giảm dần (cao xuống thấp) theo cột quantity
+--- Bước 1: Bảng chính là InvoiceDetail AS A, đem join với Beverage AS B để lấy TypeId,
+--- đem join với BeverageDetail AS BT để lấy TypeName dựa trên TypeId,
+---- sắp xếp giảm dần (cao xuống thấp) theo cột quantity (nhớ DESC)
+
 SELECT A.quantity, BT.typename FROM InvoiceDetail AS A 
 JOIN Beverage AS B ON B.BevID = A.BevID
 JOIN BeverageType ÁS BT ON B.TypeID = BT.TypeID
@@ -19,7 +22,8 @@ JOIN Beverage AS B ON B.BevID = A.BevID
 JOIN BeverageType AS BT ON B.TypeID = BT.TypeID
 GROUP BY BT.TypeName
 ORDER BY SUM(A.quantity) DESC
--- Ta thu được một bảng sắp xếp từ cao xuống thấp, giờ chọn ra top 1 cao nhất, (có thể đồng hạng nhất) , thêm chữ "top 1 with ties" kế bên chữ select là xong
+-- Ta thu được một bảng sắp xếp từ cao xuống thấp, giờ chọn ra top 1 cao nhất, (có thể đồng hạng nhất) ,
+-- thêm chữ "top 1 with ties" kế bên chữ select là xong
 SELECT TOP 1 WITH TIES SUM(A.quantity) AS SOLUONG, BT.typename FROM InvoiceDetail AS A 
 JOIN Beverage AS B ON B.BevID = A.BevID
 JOIN BeverageType AS BT ON B.TypeID = BT.TypeID
