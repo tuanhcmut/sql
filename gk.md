@@ -18,7 +18,7 @@ WHERE BevID NOT IN (
     FROM InvoiceDetail
 );
 
---- B2. Thấy đúng rồi thì chuyển hóa SELECT *  thành DELETE
+--- B2. Thấy đúng rồi (các sp xuất ra sau khi chạy đều k nằm trong bảng B) thì chuyển hóa SELECT *  thành DELETE
 
 DELETE FROM Beverage
 WHERE BevID NOT IN (
