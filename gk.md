@@ -116,7 +116,7 @@ JOIN Beverage AS B ON B.BevID = A.BevID
 JOIN BeverageType AS BT ON B.TypeID = BT.TypeID
 GROUP BY BT.TypeName
 ORDER BY A.quantity DESC
--- Lúc này sẽ thấy chạy do ORDER BY với còn các cột còn lại thì phải theo SUM/MIN/MAX/COUNT...
+-- Lúc này sẽ thấy chạy lỗi do ORDER BY với còn các cột còn lại thì phải theo SUM/MIN/MAX/COUNT...
 SELECT SUM(A.quantity), BT.typename FROM InvoiceDetail AS A 
 JOIN Beverage AS B ON B.BevID = A.BevID
 JOIN BeverageType AS BT ON B.TypeID = BT.TypeID
