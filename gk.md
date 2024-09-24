@@ -1,3 +1,28 @@
+### 2b
+```sql
+-- Mã hóa đơn mua tất cả sản phẩm thuộc loại nước khoáng/nước suối
+-- B1: Xác định hai bảng cần xét (R và S), nó phải có chung cột nào đó (vd : BevID)
+-- B2: Xác định cột cần xuất/select (A), cột chung giữa hai bảng là gì (B)
+-- B3: Xem có điều kiện gì nữa không, nếu có thì dùng where trong công thức (điều kiện thường cũng đơn giản)
+-- B4: áp dụng công thức trong file (thế R, S , A, B, điều kiện where nếu có)
+
+SELECT InvoiceDetail.InvCode
+FROM InvoiceDetail
+WHERE InvoiceDetail.BevID IN (
+    SELECT Beverage.BevID
+    FROM Beverage
+    WHERE TypeID = '0002' -- Loại nước khoáng/nước suối
+)
+GROUP BY InvoiceDetail.InvCode
+HAVING COUNT(DISTINCT InvoiceDetail.BevID) = (
+    SELECT COUNT(Beverage.BevID)
+    FROM Beverage
+    WHERE TypeID = '0002'
+);
+
+```
+
+
 ### 2c
 ```sql
 --- Bước 1: Bảng chính là InvoiceDetail AS A, đem join với Beverage AS B để lấy TypeId,
